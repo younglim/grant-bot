@@ -21,9 +21,13 @@ config.luisCredentials.key = process.env.MICROSOFT_LUIS_KEY;
 
 var model = "https://api.projectoxford.ai/luis/v1/application?id=${config.luisCredentials.id}&subscription-key=${config.luisCredentials.key}";
 var recognizer = new builder.LuisRecognizer(model);
-var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
-dialog.matches('Apply for grant', builder.DialogAction.send('Let\'s Apply for a grant!'));
-dialog.onDefault(builder.DialogAction.send("It went through"));
+var dialog = new builder.IntentDialog({ recognizers: [
+  recognizer
+] });
+dialog.begin = function(session, reply) {
+  console.log(arguments);
+  this.replyReceived(session);
+}
 
 /**
  * START CONTROLLER
@@ -34,6 +38,23 @@ var connector = (config.environment === 'development') ?
 var bot = new builder.UniversalBot(connector);
 
 bot.dialog('/', dialog);
+dialog.matches('Apply for grant', builder.DialogAction.send('Let\'s Apply for a grant!'));
+dialog.onDefault(builder.DialogAction.send("It went through"));
+/*bot.mwReceive.push(function(event, next) {
+  console.log('receive');
+  console.log(arguments);
+  next();
+});
+bot.mwSend.push(function(event, next) {
+  console.log('send');
+  console.log(arguments);
+  next();
+});
+bot.mwSession.push(function(event, next) {
+  console.log('session');
+  console.log(arguments);
+  next();
+});*/
 if(config.environment === 'production') {
   server.post('/api/messages', connector.listen());
   server.listen(process.env.port || process.env.PORT || 3978, function () {
