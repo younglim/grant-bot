@@ -20,8 +20,8 @@ try {
       throw ex;
   }
 }
-config.botCredentials.appPassword = process.env.MICROSOFT_APP_ID ? process.env.MICROSOFT_APP_ID : crypt.decrypt(config.botCredentials.appPassword, applicationPassword);
-config.botCredentials.appId = process.env.MICROSOFT_APP_PASSWORD ? process.env.MICROSOFT_APP_PASSWORD : crypt.decrypt(config.botCredentials.appId, applicationPassword);
+config.botCredentials.appId = process.env.MICROSOFT_APP_ID ? process.env.MICROSOFT_APP_ID : crypt.decrypt(config.botCredentials.appId, applicationPassword);
+config.botCredentials.appPassword = process.env.MICROSOFT_APP_PASSWORD ? process.env.MICROSOFT_APP_PASSWORD : crypt.decrypt(config.botCredentials.appPassword, applicationPassword);
 const connector = (config.environment === 'development') ?
   new builder.ConsoleConnector().listen() :
   new builder.ChatConnector(config.botCredentials);
