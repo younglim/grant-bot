@@ -40,6 +40,22 @@ var bot = new builder.UniversalBot(connector);
 bot.dialog('/', dialog);
 dialog.matches('Apply for grant', builder.DialogAction.send('Let\'s Apply for a grant!'));
 dialog.onDefault(builder.DialogAction.send("It went through"));
+
+//session.beginDialog('/uploadImage');
+
+bot.dialog('/uploadImage', [
+  (session) => {
+    builder.Prompts.attachment(session, "Upload an image and I'll send it back to you.");
+  },
+  (session, results) => {
+    var msg = new builder.Message(session)
+        .ntext("I got %d attachment.", "I got %d attachments.", results.response.length);
+    results.response.forEach(function (attachment) {
+        msg.addAttachment(attachment);    
+    });
+    session.endDialog(msg);
+  }
+]);
 /*bot.mwReceive.push(function(event, next) {
   console.log('receive');
   console.log(arguments);
