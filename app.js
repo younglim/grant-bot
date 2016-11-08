@@ -8,7 +8,8 @@ const config = ConfigGuardian({ ignore: ['node_modules'], refresh: true });
 const server = restify.createServer();
 let applicationPassword = null;
 try {
-  applicationPassword = fs.readFileSync(path.join(__dirname, '/PASSWORD')).toString();
+  applicationPassword = (process.env.MICROSOFT_APP_ID && process.env.MICROSOFT_APP_PASSWORD) ?
+    '' : fs.readFileSync(path.join(__dirname, '/PASSWORD')).toString();
 } catch(ex) {
   switch(ex.code) {
     case 'ENOENT':
@@ -19,8 +20,8 @@ try {
       throw ex;
   }
 }
-config.botCredentials.appPassword = crypt.decrypt(config.botCredentials.appPassword, applicationPassword);
-config.botCredentials.appId = crypt.decrypt(config.botCredentials.appId, applicationPassword);
+config.botCredentials.appPassword = process.env.MICROSOFT_APP_ID ? process.env.MICROSOFT_APP_ID : crypt.decrypt(config.botCredentials.appPassword, applicationPassword);
+config.botCredentials.appId = process.env.MICROSOFT_APP_PASSWORD ? process.env.MICROSOFT_APP_PASSWORD : crypt.decrypt(config.botCredentials.appId, applicationPassword);
 const connector = (config.environment === 'development') ?
   new builder.ConsoleConnector().listen() :
   new builder.ChatConnector(config.botCredentials);
