@@ -2,3 +2,4 @@ config/bot.config.js
 node_modules
 PASSWORD
 run
+.idea/
