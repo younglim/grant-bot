@@ -1,49 +1,42 @@
+const fs = require('fs');
+const path = require('path');
 const restify = require('restify');
 const builder = require('botbuilder');
-
-//=========================================================
-// Bot Setup
-//=========================================================
-
-// Setup Restify Server
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
-});
-  
-// Create chat bot
-var connector = new builder.ChatConnector({
-    appId: process.env.MICROSOFT_APP_ID,
-    appPassword: process.env.MICROSOFT_APP_PASSWORD
-});
-var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
-
-//=========================================================
-// Bots Dialogs
-//=========================================================
-
-bot.dialog('/', function (session) {
-    session.send("Hello World");
-});
-
 const server = restify.createServer();
 
-config.botCredentials.appId = process.env.MICROSOFT_APP_ID ? process.env.MICROSOFT_APP_ID : crypt.decrypt(config.botCredentials.appId, applicationPassword);
-config.botCredentials.appPassword = process.env.MICROSOFT_APP_PASSWORD ? process.env.MICROSOFT_APP_PASSWORD : crypt.decrypt(config.botCredentials.appPassword, applicationPassword);
+/**
+ * START BOOTSTRAP
+ */
+let applicationPassword = null;
 
+const config = {
+  environment: (process.env.NODE_ENV || 'development'),
+  botCredentials: {},
+  luisCredentials: {}
+};
+config.botCredentials.appId = process.env.MICROSOFT_APP_ID;
+config.botCredentials.appPassword = process.env.MICROSOFT_APP_PASSWORD;
+config.luisCredentials.id = process.env.MICROSOFT_LUIS_ID;
+config.luisCredentials.key = process.env.MICROSOFT_LUIS_KEY;
 
-var connector = new builder.ChatConnector({
-    appId: process.env.MICROSOFT_APP_ID,
-    appPassword: process.env.MICROSOFT_APP_PASSWORD
-});
+// "https://api.projectoxford.ai/luis/v1/application?id=${config.luisCredentials.id}&subscription-key=${config.luisCredentials.key}"
 
+/**
+ * START CONTROLLER
+ */
+const connector = (config.environment === 'development') ?
+  new builder.ConsoleConnector().listen() :
+  new builder.ChatConnector(config.botCredentials);
 const bot = new builder.UniversalBot(connector);
 bot.dialog('/', function (session) {
-    session.send("Hello Worasdasdasdsald! :D");
+    session.send("Hello Worasdasdasdsald!");
 });
-
-server.post('/api/messages', connector.listen());
-server.listen(process.env.port || process.env.PORT || 3978, function () {
+if(config.environment === 'production') {
+  server.post('/api/messages', connector.listen());
+  server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url); 
-});
+  });
+}
+/**
+ * ENDOF CONTROLLER
+ */
