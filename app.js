@@ -1,15 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-const restify = require('restify');
-const builder = require('botbuilder');
-const server = restify.createServer();
+var fs = require('fs');
+var path = require('path');
+var restify = require('restify');
+var builder = require('botbuilder');
+var server = restify.createServer();
 
 /**
  * START BOOTSTRAP
  */
-let applicationPassword = null;
+var applicationPassword = null;
 
-const config = {
+var config = {
   environment: (process.env.NODE_ENV || 'development'),
   botCredentials: {},
   luisCredentials: {}
@@ -24,10 +24,10 @@ config.luisCredentials.key = process.env.MICROSOFT_LUIS_KEY;
 /**
  * START CONTROLLER
  */
-const connector = (config.environment === 'development') ?
+var connector = (config.environment === 'development') ?
   new builder.ConsoleConnector().listen() :
   new builder.ChatConnector(config.botCredentials);
-const bot = new builder.UniversalBot(connector);
+var bot = new builder.UniversalBot(connector);
 bot.dialog('/', function (session) {
     session.send("Hello Worasdasdasdsald!");
 });
