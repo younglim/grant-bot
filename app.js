@@ -22,6 +22,7 @@ config.luisCredentials.key = process.env.MICROSOFT_LUIS_KEY;
 var model = "https://api.projectoxford.ai/luis/v1/application?id=${config.luisCredentials.id}&subscription-key=${config.luisCredentials.key}";
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
+dialog.matches('Apply for grant', builder.DialogAction.send('Let\'s Apply for a grant!'));
 dialog.onDefault(builder.DialogAction.send("It went through"));
 
 /**
@@ -31,6 +32,7 @@ var connector = (config.environment === 'development') ?
   new builder.ConsoleConnector().listen() :
   new builder.ChatConnector(config.botCredentials);
 var bot = new builder.UniversalBot(connector);
+
 bot.dialog('/', dialog);
 if(config.environment === 'production') {
   server.post('/api/messages', connector.listen());
