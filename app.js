@@ -27,7 +27,7 @@ const connector = (config.environment === 'development') ?
   new builder.ChatConnector(config.botCredentials);
 const bot = new builder.UniversalBot(connector);
 bot.dialog('/', function (session) {
-    session.send("Hello Worasdasdasdsald!");
+    session.send("Hello Worasdasdasdsald! :D");
 });
 if(config.environment === 'production') {
   server.post('/api/messages', connector.listen());
