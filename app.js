@@ -20,6 +20,8 @@ config.luisCredentials.id = process.env.MICROSOFT_LUIS_ID;
 config.luisCredentials.key = process.env.MICROSOFT_LUIS_KEY;
 
 var model = "https://api.projectoxford.ai/luis/v1/application?id=${config.luisCredentials.id}&subscription-key=${config.luisCredentials.key}";
+console.log(model);
+
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [
   recognizer
