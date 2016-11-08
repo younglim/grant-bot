@@ -41,7 +41,11 @@ var connector = (config.environment === 'development') ?
 var bot = new builder.UniversalBot(connector);
 
 bot.dialog('/', dialog);
-dialog.matches('None', builder.DialogAction.send('I\'m just a bot. I don\'t know everything!'));
+
+var intentDialogNone = require('./intents/dialog.none.js');
+dialog.matches(intentDialogNone.label, intentDialogNone.callbackProvider(builder));
+
+
 dialog.matches('Apply for grant', builder.DialogAction.send('To apply for a grant, you need a CorpPass account. Does your company have a CorpPass administrator?'));
 dialog.matches('Available grants', builder.DialogAction.send('There are 2 grants now – International Enterprise Singapore\’s Market Readiness Assistance grant and Building and Construction Authority\’s Building Information Model Fund.'));
 dialog.matches('Application duration', builder.DialogAction.send('It should take you about 20 minutes to complete a grant application, if you have the right documents.'));
