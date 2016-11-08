@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var superagent = require('superagent');
 var restify = require('restify');
 var builder = require('botbuilder');
 var server = restify.createServer();
@@ -37,7 +38,6 @@ var connector = (config.environment === 'development') ?
 var bot = new builder.UniversalBot(connector);
 
 bot.dialog('/', dialog);
-dialog.onDefault(builder.DialogAction.send("It went through"));
 dialog.matches('None', builder.DialogAction.send('I\'m just a bot. I don\'t know everything!'));
 dialog.matches('Apply for grant', builder.DialogAction.send('To apply for a grant, you need a CorpPass account. Does your company have a CorpPass administrator?'));
 dialog.matches('Available grants', builder.DialogAction.send('There are 2 grants now – International Enterprise Singapore\’s Market Readiness Assistance grant and Building and Construction Authority\’s Building Information Model Fund.'));
@@ -45,12 +45,24 @@ dialog.matches('Application duration', builder.DialogAction.send('It should take
 dialog.matches('Time to get grant', builder.DialogAction.send('After you submit your application, the agency giving out the grant will need 2-4 weeks to process it. If your grant is approved, you can submit your claim to get your grant money.'));
 dialog.matches('Grant Amount', builder.DialogAction.send('Different grants have different support levels, depending on what you\'re implementing or upgrading.'));
 dialog.matches('BGP Intro', builder.DialogAction.send('Business Grants Portal brings government grants for businesses into one place, so it\'s easier to find and apply for the grants you need. The grant support you receive will depend on your situation.'));
-dialog.matches('Latest News', builder.DialogAction.send('We\'ve just launched the Building Information Model Fund from Building and Construction Authority (BCA).'));
-//https://businessgrants.gov.sg/api/v1/news
+dialog.matches('Latest News', [
+  function(session, args, next) {
+    superagent.get('https://businessgrants.gov.sg/api/v1/news')
+      .end((err, res) => {
+        var card = new builder.HeroCard(session)
+            .title(`${res.body.news[0].title}`)
+            .text(`${res.body.news[0].content}`);
+        var msg = new builder.Message(session).attachments([card]);
+        session.send(msg);
+      });
+  }
+]);// builder.DialogAction.send('We\'ve just launched the Building Information Model Fund from Building and Construction Authority (BCA).'));
+//
 dialog.matches('Log-in Help', builder.DialogAction.send('Just click on the log-in button and log in with your CorpPass account. If you don\'t have a CorpPass account,speak to your CorpPass administrator.'));
 dialog.matches('Eligibility', builder.DialogAction.send('Each grant has slightly different eligibility criteria but most would require your business to be registered in Singapore with a minimum percentage of local shareholders. When you apply for a grant, the first part of the application states the eligibility criteria for that specific grant. Which grant are you applying for?'));
 dialog.matches('Apply for same grant', builder.DialogAction.send('Yes you can apply for the same grant more than once, as long as it\'s not for the same project.'));
 dialog.matches('CorpPass Intro', builder.DialogAction.send('CorpPass or Singapore Corporate Access is a secure way for your business to transact online with the goverment. To apply for a grant, you need a CorpPass account. Does your company have a CorpPass administrator?'));
+dialog.onDefault(builder.DialogAction.send("It went through"));
 
 
 bot.dialog('/uploadImage', [
