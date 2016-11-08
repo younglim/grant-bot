@@ -4,6 +4,7 @@ var superagent = require('superagent');
 var restify = require('restify');
 var builder = require('botbuilder');
 var server = restify.createServer();
+var oxford = require('project-oxford');
 
 /**
  * START BOOTSTRAP
@@ -13,12 +14,14 @@ var applicationPassword = null;
 var config = {
   environment: (process.env.NODE_ENV || 'development'),
   botCredentials: {},
-  luisCredentials: {}
+  luisCredentials: {},
+  visionApiCredentials: {}
 };
 config.botCredentials.appId = process.env.MICROSOFT_APP_ID;
 config.botCredentials.appPassword = process.env.MICROSOFT_APP_PASSWORD;
 config.luisCredentials.id = process.env.MICROSOFT_LUIS_ID;
 config.luisCredentials.key = process.env.MICROSOFT_LUIS_KEY;
+config.visionApiCredentials.key = process.env.MICROSOFT_VISIONAPI_KEY;
 
 var model = `https://api.projectoxford.ai/luis/v1/application?id=${config.luisCredentials.id}&subscription-key=${config.luisCredentials.key}`;
 var recognizer = new builder.LuisRecognizer(model);
@@ -63,7 +66,11 @@ dialog.matches('Eligibility', builder.DialogAction.send('Each grant has slightly
 dialog.matches('Apply for same grant', builder.DialogAction.send('Yes you can apply for the same grant more than once, as long as it\'s not for the same project.'));
 dialog.matches('CorpPass Intro', builder.DialogAction.send('CorpPass or Singapore Corporate Access is a secure way for your business to transact online with the goverment. To apply for a grant, you need a CorpPass account. Does your company have a CorpPass administrator?'));
 dialog.onDefault(builder.DialogAction.send("It went through"));
+dialog.matches('Upload document', function (session, results) {
+  session.beginDialog('/uploadImage');
+});
 
+var visionClient = new oxford.Client(config.visionApiCredentials.key);
 
 bot.dialog('/uploadImage', [
   (session) => {
@@ -72,8 +79,15 @@ bot.dialog('/uploadImage', [
   (session, results) => {
     var msg = new builder.Message(session)
         .ntext("I got %d attachment.", "I got %d attachments.", results.response.length);
+
     results.response.forEach(function (attachment) {
-        msg.addAttachment(attachment);    
+        msg.addAttachment(attachment);
+        visionClient.vision.ocr({
+          path: attachment.contentUrl,
+          language: 'en'
+        }).then(function (response) {
+          session.send(response);
+        }); 
     });
     session.endDialog(msg);
   }

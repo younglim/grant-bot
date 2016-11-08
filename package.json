@@ -14,7 +14,8 @@
     "restify": "^4.2.0",
     "rsa-pem-from-mod-exp": "^0.8.4",
     "sprintf-js": "^1.0.3",
-    "superagent": "^2.3.0"
+    "superagent": "^2.3.0",
+    "project-oxford": "^1.5.0"
   },
   "devDependencies": {
     "inspect": "^0.0.2"
