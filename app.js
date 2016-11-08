@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const restify = require('restify');
 const builder = require('botbuilder');
-const ConfigGuardian = require('config-guardian');
 const config = ConfigGuardian({ ignore: ['node_modules'], refresh: true });
 const server = restify.createServer();
 
