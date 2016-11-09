@@ -25,9 +25,9 @@ module.exports = {
         console.log(result);
         session.send(`Great work, you chose: ${result.response.entity}!!`);
         switch(result.response.index) {
-          case 1: 'No one, NO one, knows bots like I do.'; break;
-          case 2: 'MAKE YOUR CHOICE!!! MAKE YOUR *coughs*'; break;
-          case 3: 'Aight my niggas, you didn\'t like Obamacare'; break;
+          case 1: session.send('No one, NO one, knows bots like I do.'); break;
+          case 2: session.send('MAKE YOUR CHOICE!!! MAKE YOUR *coughs*'); break;
+          case 3: session.send('Aight my niggas, you didn\'t like Obamacare'); break;
         }
         next();
       },

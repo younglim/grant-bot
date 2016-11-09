@@ -78,7 +78,12 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          session.send(attachment.contentUrl);
+          console.log(arguments);
+          console.log(response.regions[0]);
+          session.endDialog(response.regions[0]);
+
+        }, function(err) {
+          console.log(arguments);
         });
     });
     
