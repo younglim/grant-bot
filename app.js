@@ -61,20 +61,19 @@ bot.dialog('/uploadImage', [
     builder.Prompts.attachment(session, "Upload an image and I'll send it back to you.");
   },
   (session, results) => {
-    var msg = new builder.Message(session)
-        .ntext("I got %d attachment.", "I got %d attachments.", results.response.length);
-
+  
     results.response.forEach(function (attachment) {
         msg.addAttachment(attachment);
         visionClient.vision.ocr({
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          console.log("Response from ocr image");
-          console.log(response.body);
+          var msg =  builder.Message(session)
+          .ntext(response.body, response.body);
+          session.endDialog(msg);
         });
     });
-    session.endDialog(msg);
+    
   }
 ]);
 if(config.environment === 'production') {
