@@ -5,7 +5,7 @@ function getFlow(builder) {
       next();
     },
     function(session, args, next) {
-      builder.Prompts.choice(session, 'Try it now, ask me how many grants there are on Business Grants Portal.', 'How many grants?|I want to ask another question.');
+      builder.Prompts.choice(session, 'Try it now, ask me how many grants there are on Business Grants Portal.', 'How many grants?|No thanks, U+1F645.');
     },
     function(session, result, next) {
       switch(result.response.index) {
