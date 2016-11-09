@@ -71,7 +71,7 @@ dialog.matches('Eligibility', builder.DialogAction.send('Each grant has slightly
 dialog.matches('Apply for same grant', builder.DialogAction.send('Yes you can apply for the same grant more than once, as long as it\'s not for the same project.'));
 dialog.matches('CorpPass Intro', builder.DialogAction.send('CorpPass or Singapore Corporate Access is a secure way for your business to transact online with the goverment. To apply for a grant, you need a CorpPass account. Does your company have a CorpPass administrator?'));
 dialog.onDefault(builder.DialogAction.send("It went through"));
-dialog.matches('Upload document', function (session, results) {
+dialog.matches('Upload', function (session, results) {
   session.beginDialog('/uploadImage');
 });
 
