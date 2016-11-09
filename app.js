@@ -6,6 +6,8 @@ var builder = require('botbuilder');
 var server = restify.createServer();
 var oxford = require('project-oxford');
 var telegramDebug = require('./telegram-debug');
+var jsonPrettify = require('json-pretty');
+
 /**
  * START BOOTSTRAP
  */
@@ -97,8 +99,8 @@ bot.dialog('/uploadImage', [
             if (currencyAmount !== null) {
               session.endDialog("I have added your invoice of " + currencyAmount+ " .");
             } else {
-              telegramDebug.logJson(response.regions);
               session.send("I couldn't read your document, please send a clearer image.");
+              console.log(jsonPrettify(response.regions));
             }
 
           } else {
