@@ -47,7 +47,7 @@ const intentListing = fs.readdirSync(pathToIntents);
 intentListing.forEach(intent => {
   const currentIntent = require(path.join(pathToIntents, `/${intent}`));
   console.info(`Registered intent ${currentIntent.label}`);
-  dialog.matches(currentIntent.label, currentIntent.callbackProvider(builder));
+  dialog.matches(currentIntent.label, currentIntent.callbackProvider(builder, bot));
 });
 // builder.DialogAction.send('We\'ve just launched the Building Information Model Fund from Building and Construction Authority (BCA).'));
 //
@@ -79,21 +79,28 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          var data = response.regions[0];
-          var ocrText = '';
+          
+          if ((typeof response.regions !== 'undefined') && (response.regions.length > 0) && (typeof response.regions[0].lines !== 'undefined')) {
 
-          data.lines.forEach(line => {
-            line.words.forEach(word => {
-              ocrText += word.text +" ";
+            var data = response.regions[0];
+            var ocrText = '';
+
+            data.lines.forEach(line => {
+                line.words.forEach(word => {
+                  ocrText += word.text +" ";
+                });
             });
-          });
 
-          telegramDebug.logJson(ocrText);
-
-          session.endDialog(ocrText);
+            var currencyAmount = ocrText.match(/\$\S+/g);
+            session.endDialog(currentyAmount + " "+ ocrText);
+          } else {
+            session.send("We couldn't read your document. Please send it in JPG or PNG format again.");
+          }
+         
 
         }, function(err) {
           console.log(arguments);
+          session.endDialog("We're sorry, an unknown error has occured.");
         });
     });
     
