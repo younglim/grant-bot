@@ -70,8 +70,8 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
+          console.log("Response from ocr image");
           console.log(response.body);
-          session.send(response);
         });
     });
     session.endDialog(msg);
