@@ -2,19 +2,21 @@ module.exports = {
   label: 'Eligibility',
   callbackProvider: (builder) => {
     return [
-      function(session, args) {
+      function(session, args, next) {
         session.sendTyping();
-        setTimeout(function() {
-          session.send('Each grant has slightly different eligibility criteria but most would require your business to be registered in Singapore with a minimum percentage of local shareholders.');
-          session.sendTyping();
-        }, 1000);
-        setTimeout(function() {
-          builder.Prompts.choice(
-            session,
-            'When you apply for a grant, the first part of the application states the eligibility criteria for that specific grant. Which grant do you want to apply for?',
-            'International Enterprise Singapore\'s Market Readiness Assistance|Building & Construction Authorities Building Information Model Fund|I don\'t know'
-          );
-        }, 2000);
+        setTimeout(function() { next(); }, 1500);
+      },
+      function(session, args, next) {
+        session.send('Each grant has slightly different eligibility criteria but most would require your business to be registered in Singapore with a minimum percentage of local shareholders.');
+        session.sendTyping();
+        setTimeout(function() { next(); }, 1500);
+      },
+      function(session, args, next) {
+        builder.Prompts.choice(
+          session,
+          'When you apply for a grant, the first part of the application states the eligibility criteria for that specific grant. Which grant do you want to apply for?',
+          'IE-MRA|BCA-BIM|I don\'t know'
+        );
       },
       function(session, result, next) {
         var msg = new builder.Message(session)
@@ -40,10 +42,10 @@ module.exports = {
                   ])
                   .buttons([
                       builder.CardAction.openUrl(session, "https://www.smeportal.sg/content/smeportal/en/moneymatters/grants/building-information-model-bim.html", "Wikipedia"),
-                      builder.CardAction.imBack(session, "select:200", "Select")
+                      builder.CardAction.imBack(session, "select:101", "Select")
                   ]),
             ]);
-        session.send(msg);
+        builder.Prompts.choice(session, msg, "select:100|select:101");
         /**
         if(result.response.index === 2) {
           session.Prompts.choice(
