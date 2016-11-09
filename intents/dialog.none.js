@@ -2,16 +2,24 @@ module.exports = {
   label: 'None',
   callbackProvider: (builder) => {
     return [
-      function(session, args, next) {
-        session.send("CrunchBot can answer questions about a handfull of tech companies. Here are some of the things you can ask:\n\n" +
-        "* 'tell me about Microsoft'\n" +
-        "* 'how many companies has apple bought?'\n" +
-        "* 'when did amazon go public?'\n" +
-        "* 'where is googles headquarters?'\n" +
-        "* 'who founded microsoft?'\n" +
-        "* 'what is amazons website?'\n" +
-        "\nOnce you ask a question about a company you can ask followup questions about the same company.");
-        next();
+      function (session) {
+        builder.Prompts.choice(session, "Choose an option:", 'Flip A Coin|Roll Dice|Magic 8-Ball|Quit');
+      },
+      function (session, results) {
+        switch (results.response.index) {
+          case 0:
+            session.beginDialog('/flipCoin');
+            break;
+          case 1:
+            session.beginDialog('/rollDice');
+            break;
+          case 2:
+            session.beginDialog('/magicBall');
+            break;
+          default:
+            session.endDialog();
+            break;
+        }
       },
       builder.DialogAction.send('I\'m just a bot. I don\'t know everything!')
     ];
