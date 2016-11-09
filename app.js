@@ -92,7 +92,7 @@ bot.dialog('/uploadImage', [
               });
             });
 
-            var currencyAmount = ocrText.match(/(((SGD|USD|TOTAL)\s*)|(\$\s*))\d+\.?\d*/g);
+            var currencyAmount = ocrText.match(/(((SGD|USD|TOTAL|Total)\s*)|(\$\s*))\d+\.?\d*/g);
             var others = ocrText;
 
             if (currencyAmount !== null) {
