@@ -92,13 +92,13 @@ bot.dialog('/uploadImage', [
               });
             });
 
-            var currencyAmount = ocrText.match(/(((SGD|USD)\s*)|(\$\s*))\d+\.?\d*/g);
+            var currencyAmount = ocrText.match(/(((SGD|USD|TOTAL|Total)\s*)|(\$\s*))\d+\.?\d*/g);
             var others = ocrText;
 
             if (currencyAmount !== null) {
               session.endDialog("I have added your invoice of " + currencyAmount+ " .");
             } else {
-              session.send("I couldn't read your document.\n\nDebug info:`"+ocrText+"`");
+              session.send("I couldn't read your document, please send a clearer image.\n\nDebug info:`"+ocrText+"`");
             }
 
           } else {
