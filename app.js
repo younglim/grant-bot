@@ -79,16 +79,16 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          telegramDebug.logJson(response.regions[0]);
+          
+          var ocrText = '';
+          data.lines.forEach(line => {
+            line.words.forEach(word => {
+              ocrText += ${word.text} ;
+            });
+          });
 
-          console.log(response.regions[0].lines[0].words[0]);
-          var ocrText = "";
+          telegramDebug.logJson(ocrText);
 
-          for (i = 0; i < response.regions[0].lines[0].words[0]; i++) { 
-              ocrText += response.regions[0].lines[0].words[0].text[i] + " ";
-          }
-
-          console.log(ocrText);
           session.endDialog(ocrText);
 
         }, function(err) {
