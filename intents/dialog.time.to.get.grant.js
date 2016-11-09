@@ -13,7 +13,7 @@ function getFlow(builder) {
             contentType: "image/jpeg",
             contentUrl: "https://s-media-cache-ak0.pinimg.com/236x/83/03/e5/8303e5de43d1424c04f18f90bc8f9df9.jpg"
           }]);
-        session.endDialog();
+        session.endDialog(msg);
       }, 3000);
     },
   ];
