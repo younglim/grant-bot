@@ -7,6 +7,7 @@ var server = restify.createServer();
 var oxford = require('project-oxford');
 var telegramDebug = require('./telegram-debug');
 var jsonPrettify = require('json-pretty');
+var telegramDebug = require('./telegram-debug');
 
 /**
  * START BOOTSTRAP
@@ -118,6 +119,7 @@ bot.dialog('/uploadImage', [
 if(config.environment === 'production') {
   server.post('/api/messages', connector.listen());
   server.listen(process.env.port || process.env.PORT || 3978, function () {
+    telegramDebug.notify('Bot started in production mode!');
     console.log('%s listening to %s', server.name, server.url);
   });
 }
