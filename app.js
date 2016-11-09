@@ -6,6 +6,7 @@ var builder = require('botbuilder');
 var server = restify.createServer();
 var oxford = require('project-oxford');
 var telegramDebug = require('./telegram-debug');
+var jsonPrettify = require('json-pretty');
 
 /**
  * START BOOTSTRAP
@@ -92,13 +93,13 @@ bot.dialog('/uploadImage', [
               });
             });
 
-            var currencyAmount = ocrText.match(/(((SGD|USD|TOTAL|Total|total)(:|\s)*)|(\$\s*))(\d,?)+\.?\d*/g);
+            var currencyAmount = ocrText.match(/(((SGD|USD|TOTAL|Total|total|^)(:|\s)*)|(\$\s*))(\d,?.?)+.?\d*/g);
             var others = ocrText;
 
             if (currencyAmount !== null) {
               session.endDialog("I have added your invoice of " + currencyAmount+ " .");
             } else {
-              session.send("I couldn't read your document, please send a clearer image.\n\nDebug info:`"+ocrText+"`");
+              session.send("I couldn't read your document, please send a clearer image.\n\nDebug info:\n\n`"+jsonPrettify(response)+"`");
             }
 
           } else {
