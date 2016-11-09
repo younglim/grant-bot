@@ -21,7 +21,7 @@ module.exports = {
         next();
       },
       function(session, args, next) {
-        builder.Prompts.choice(session, 'Make a choice!', 'Trump|Hillary|Obama');
+        builder.Prompts.choice(session, '😤 Make a choice!', 'Trump|Hillary|Obama');
       },
       function(session, result, next) {
         console.log(result);
