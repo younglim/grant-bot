@@ -67,7 +67,7 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          session.send(response.body);
+          session.send(attachment.contentUrl);
         });
     });
     
