@@ -17,22 +17,14 @@ module.exports = {
         }, 2000);
       },
       function(session, result, next) {
-        var msg = new builder.Message(session)
-          .attachments([
-              new builder.HeroCard(session)
-                  .title("Hero Card")
-                  .subtitle("The Space Needle is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
-                  .images([
-                      builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
-                  ])
-                  .tap(builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Space_Needle")),
-              new builder.HeroCard(session)
-                  .title("Hero Card 2")
-                  .subtitle("The Space Needle is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
-                  .images([
-                      builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
-                  ])
-                  .tap(builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Space_Needle"))
+        var msg = new builder.ThumbnailCard(session)
+          .buttons([
+            new builder.CardAction(session)
+              .image('http://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg')
+              .title('A'),
+            new builder.CardAction(session)
+              .image('http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg')
+              .title('B')
           ]);
         session.send(msg);
         /**
