@@ -97,7 +97,7 @@ bot.dialog('/uploadImage', [
             if (currencyAmount !== null) {
               session.endDialog("I have added your invoice of " + currencyAmount+ " .");
             } else {
-              telegramDebug(response.regions);
+              telegramDebug.logJson(response.regions);
               session.send("I couldn't read your document, please send a clearer image.");
             }
 
