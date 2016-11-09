@@ -32,6 +32,7 @@ var dialog = new builder.IntentDialog({ recognizers: [
   recognizer
 ] });
 dialog.begin = function(session, reply) {
+  session.endConversation();
   this.replyReceived(session);
 }
 
