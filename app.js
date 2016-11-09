@@ -92,8 +92,8 @@ bot.dialog('/uploadImage', [
               });
             });
 
-            var currencyAmount = ocrText.match(/\$\S+/g);
-            session.endDialog(currencyAmount + " "+ ocrText);
+            var currencyAmount = ocrText.match(/(SGD)*\s*(\$)*\s*\S+/g);
+            session.endDialog("We have saved +" + currencyAmount+ " as a claim.");
           } else {
             session.send("I couldn't read your document. Please send it in JPG or PNG format again.");
           }
