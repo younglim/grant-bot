@@ -93,14 +93,13 @@ bot.dialog('/uploadImage', [
               });
             });
 
-            var currencyAmount = ocrText.match(/(((SGD|USD|TOTAL|Total|total|^)(:|\s)*)|(\$\s*))(\d,?.?)+.?\d*/g);
+            var currencyAmount = ocrText.match(/((([a-zA-Z]{2,3}|TOTAL|Total|total|^)(:|\s)*)|(\$\s*))(\d,?.?)+.?\d*/g);
             var others = ocrText;
 
             if (currencyAmount !== null) {
               session.endDialog("I have added your invoice of " + currencyAmount+ " .");
             } else {
               session.send("I couldn't read your document, please send a clearer image.");
-              console.log(jsonPrettify(response.regions));
             }
 
           } else {
