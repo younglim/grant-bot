@@ -82,18 +82,21 @@ bot.dialog('/uploadImage', [
           var data = response.regions[0];
           var ocrText = '';
 
-          data.lines.forEach(line => {
-            line.words.forEach(word => {
-              ocrText += word.text +" ";
+          if (data.lines !== 'undefined') {
+            data.lines.forEach(line => {
+                line.words.forEach(word => {
+                  ocrText += word.text +" ";
+                });
             });
-          });
-
-          telegramDebug.logJson(ocrText);
-
+          } else {
+            session.send("We couldn't read your document. Please send it in JPG or PNG format again.");
+          }
+         
           session.endDialog(ocrText);
 
         }, function(err) {
           console.log(arguments);
+          session.endDialog("We're sorry, an unknown error has occured.");
         });
     });
     
