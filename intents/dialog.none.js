@@ -6,7 +6,7 @@ module.exports = {
         session.send('1');
         next();
       },
-      builder.DialogAction.send('I\'m just a bot. I don\'t know everything 2!')
+      builder.DialogAction.send('I\'m just a bot. I don\'t know everything!')
     ];
   }
 };

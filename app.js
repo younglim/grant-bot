@@ -60,10 +60,6 @@ dialog.matches('Latest News', [
   }
 ]);// builder.DialogAction.send('We\'ve just launched the Building Information Model Fund from Building and Construction Authority (BCA).'));
 //
-dialog.matches('Log-in Help', builder.DialogAction.send('Just click on the log-in button and log in with your CorpPass account. If you don\'t have a CorpPass account,speak to your CorpPass administrator.'));
-dialog.matches('Eligibility', builder.DialogAction.send('Each grant has slightly different eligibility criteria but most would require your business to be registered in Singapore with a minimum percentage of local shareholders. When you apply for a grant, the first part of the application states the eligibility criteria for that specific grant. Which grant are you applying for?'));
-dialog.matches('Apply for same grant', builder.DialogAction.send('Yes you can apply for the same grant more than once, as long as it\'s not for the same project.'));
-dialog.matches('CorpPass Intro', builder.DialogAction.send('CorpPass or Singapore Corporate Access is a secure way for your business to transact online with the goverment. To apply for a grant, you need a CorpPass account. Does your company have a CorpPass administrator?'));
 dialog.onDefault(builder.DialogAction.send("It went through"));
 dialog.matches('Upload', function (session, results) {
   session.beginDialog('/uploadImage');
@@ -86,7 +82,7 @@ bot.dialog('/uploadImage', [
           language: 'en'
         }).then(function (response) {
           session.send(response);
-        }); 
+        });
     });
     session.endDialog(msg);
   }
@@ -94,7 +90,7 @@ bot.dialog('/uploadImage', [
 if(config.environment === 'production') {
   server.post('/api/messages', connector.listen());
   server.listen(process.env.port || process.env.PORT || 3978, function () {
-    console.log('%s listening to %s', server.name, server.url); 
+    console.log('%s listening to %s', server.name, server.url);
   });
 }
 /**
