@@ -1,3 +1,5 @@
+const superagent = require('superagent');
+
 module.exports = {
   label: 'Latest News',
   callbackProvider: (builder) => {
