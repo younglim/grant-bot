@@ -79,15 +79,16 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          
+          var data = response.regions[0];
           var ocrText = '';
+          
           data.lines.forEach(line => {
             line.words.forEach(word => {
               ocrText += ${word.text} ;
             });
           });
 
-          telegramDebug.logJson(ocrText);
+          telegramDebug.logJson(ocrText;
 
           session.endDialog(ocrText);
 
