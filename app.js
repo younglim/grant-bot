@@ -82,7 +82,7 @@ bot.dialog('/uploadImage', [
     results.response.forEach(function (attachment) {
         msg.addAttachment(attachment);
         visionClient.vision.ocr({
-          path: attachment.contentUrl,
+          url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
           session.send(response);
