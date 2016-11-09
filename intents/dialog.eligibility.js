@@ -17,15 +17,32 @@ module.exports = {
         }, 2000);
       },
       function(session, result, next) {
-        var msg = new builder.ThumbnailCard(session)
-          .buttons([
-            new builder.CardAction(session)
-              .image('http://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg')
-              .title('A'),
-            new builder.CardAction(session)
-              .image('http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg')
-              .title('B')
-          ]);
+        var msg = new builder.Message(session)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+                  .title("International Enterprise Singapore\'s Market Readiness Assistance")
+                  .subtitle("International Enterprise Singapore\'s Market Readiness Assistance")
+                  .images([
+                      builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
+                          .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
+                  ])
+                  .buttons([
+                      builder.CardAction.openUrl(session, "http://www.iesingapore.gov.sg/Assistance/Market-Readiness-Assistance/Financial-Assistance/Market-Readiness-Assistance-Grant", "Wikipedia"),
+                      builder.CardAction.imBack(session, "select:100", "Select")
+                  ]),
+                new builder.HeroCard(session)
+                  .title("Building & Construction Authorities Building Information Model Fund")
+                  .subtitle("Building & Construction Authorities Building Information Model Fund")
+                  .images([
+                      builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
+                        .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
+                  ])
+                  .buttons([
+                      builder.CardAction.openUrl(session, "https://www.smeportal.sg/content/smeportal/en/moneymatters/grants/building-information-model-bim.html", "Wikipedia"),
+                      builder.CardAction.imBack(session, "select:200", "Select")
+                  ]),
+            ]);
         session.send(msg);
         /**
         if(result.response.index === 2) {
