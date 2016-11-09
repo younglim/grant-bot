@@ -46,7 +46,7 @@ const intentListing = fs.readdirSync(pathToIntents);
 intentListing.forEach(intent => {
   const currentIntent = require(path.join(pathToIntents, `/${intent}`));
   console.info(`Registered intent ${currentIntent.label}`);
-  dialog.matches(currentIntent.label, currentIntent.callbackProvider(builder));
+  dialog.matches(currentIntent.label, currentIntent.callbackProvider(builder, bot));
 });
 // builder.DialogAction.send('We\'ve just launched the Building Information Model Fund from Building and Construction Authority (BCA).'));
 //
