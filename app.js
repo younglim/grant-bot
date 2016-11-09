@@ -45,11 +45,22 @@ const pathToIntents = path.join(__dirname, '/intents');
 const intentListing = fs.readdirSync(pathToIntents);
 intentListing.forEach(intent => {
   const currentIntent = require(path.join(pathToIntents, `/${intent}`));
+  console.info(`Registered intent ${currentIntent.label}`);
   dialog.matches(currentIntent.label, currentIntent.callbackProvider(builder));
 });
 // builder.DialogAction.send('We\'ve just launched the Building Information Model Fund from Building and Construction Authority (BCA).'));
 //
-dialog.onDefault(builder.DialogAction.send("It went through"));
+dialog.onDefault([
+  function(session, args, next) {
+    console.log('|----------------------session-----------------------|');
+    console.log(session);
+    console.log('|---------------------/session-----------------------|');
+    console.log('|------------------------args------------------------|');
+    console.log(args);
+    console.log('|-----------------------/args------------------------|');
+  },
+  builder.DialogAction.send("It went through")
+]);
 dialog.matches('Upload', function (session, results) {
   session.beginDialog('/uploadImage');
 });
