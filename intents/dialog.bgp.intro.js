@@ -8,7 +8,7 @@ function getFlow(builder) {
       builder.Prompts.choice(session, 'Would you like to know how to apply for a grant?', 'Yes|No');
     },
     function(session, result, next) {
-      switch (result.response.entity) {
+      switch (result.response.index) {
         case 0:
           session.send('CorpPass or Singapore Corporate Access is a secure way for your business to transact online with the goverment. To apply for a grant, you need a CorpPass account.');
           break;
