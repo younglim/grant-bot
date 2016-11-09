@@ -5,6 +5,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var server = restify.createServer();
 var oxford = require('project-oxford');
+var telegramDebug = require('./telegram-debug');
 
 /**
  * START BOOTSTRAP
@@ -78,7 +79,9 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          console.log(arguments);
+          telegramDebug.logJson(response.regions[0]);
+
+          console.log(response.regions[0].lines[0].words[0]);
           var ocrText = "";
 
           for (i = 0; i < response.regions[0].lines[0].words[0]; i++) { 
