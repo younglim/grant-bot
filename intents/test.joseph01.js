@@ -9,7 +9,7 @@ module.exports = {
         console.log(session);
         console.log('|---------------------/session-----------------------|');
         console.log('|------------------------args------------------------|');
-        telegramDebug.logJson(args);
+        console.log(args);
         console.log('|-----------------------/args------------------------|');
         next();
       },
@@ -21,15 +21,15 @@ module.exports = {
         next();
       },
       function(session, args, next) {
-        builder.Prompts.choice(session, 'Make a choice!', 'Trump|Hillary|Obama');
+        builder.Prompts.choice(session, '😤 Make a choice!', 'Trump|Hillary|Obama');
       },
       function(session, result, next) {
         console.log(result);
         session.send(`Great work, you chose: ${result.response.entity}!!`);
         switch(result.response.index) {
-          case 1: session.send('No one, NO one, knows bots like I do.'); break;
-          case 2: session.send('MAKE YOUR CHOICE!!! MAKE YOUR *coughs*'); break;
-          case 3: session.send('Aight my niggas, you didn\'t like Obamacare'); break;
+          case 0: session.send('No one, NO one, knows bots like I do.'); break;
+          case 1: session.send('MAKE YOUR CHOICE!!! MAKE YOUR *coughs*'); break;
+          case 2: session.send('Aight my niggas, you didn\'t like Obamacare'); break;
         }
         next();
       },

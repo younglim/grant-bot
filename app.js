@@ -6,6 +6,7 @@ var builder = require('botbuilder');
 var server = restify.createServer();
 var oxford = require('project-oxford');
 var telegramDebug = require('./telegram-debug');
+var jsonPrettify = require('json-pretty');
 
 /**
  * START BOOTSTRAP
@@ -70,7 +71,7 @@ var visionClient = new oxford.Client(config.visionApiCredentials.key);
 
 bot.dialog('/uploadImage', [
   (session) => {
-    builder.Prompts.attachment(session, "Upload an image and I'll send it back to you.");
+    builder.Prompts.attachment(session, "Upload the document and I will keep track of the claim.");
   },
   (session, results) => {
   
@@ -82,19 +83,27 @@ bot.dialog('/uploadImage', [
           
           if ((typeof response.regions !== 'undefined') && (response.regions.length > 0) && (typeof response.regions[0].lines !== 'undefined')) {
 
-            var data = response.regions[0];
             var ocrText = '';
 
-            data.lines.forEach(line => {
-                line.words.forEach(word => {
-                  ocrText += word.text +" ";
-                });
+            response.regions.forEach(data => {
+              data.lines.forEach(line => {
+                  line.words.forEach(word => {
+                    ocrText += word.text +" ";
+                  });
+              });
             });
 
-            var currencyAmount = ocrText.match(/\$\S+/g);
-            session.endDialog(currentyAmount + " "+ ocrText);
+            var currencyAmount = ocrText.match(/((([a-zA-Z]{2,3}|TOTAL|Total|total|^)(:|\s)*)|(\$\s*))(\d,?.?)+.?\d*/g);
+            var others = ocrText;
+
+            if (currencyAmount !== null) {
+              session.endDialog("I have added your invoice of " + currencyAmount+ " .");
+            } else {
+              session.send("I couldn't read your document, please send a clearer image.");
+            }
+
           } else {
-            session.send("We couldn't read your document. Please send it in JPG or PNG format again.");
+            session.send("I couldn't read your document. Please send it in JPG or PNG format again.");
           }
          
 
