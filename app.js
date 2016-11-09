@@ -82,13 +82,14 @@ bot.dialog('/uploadImage', [
           
           if ((typeof response.regions !== 'undefined') && (response.regions.length > 0) && (typeof response.regions[0].lines !== 'undefined')) {
 
-            var data = response.regions[0];
             var ocrText = '';
 
-            data.lines.forEach(line => {
-                line.words.forEach(word => {
-                  ocrText += word.text +" ";
-                });
+            response.regions.forEach(data => {
+              data.lines.forEach(line => {
+                  line.words.forEach(word => {
+                    ocrText += word.text +" ";
+                  });
+              });
             });
 
             var currencyAmount = ocrText.match(/\$\S+/g);
