@@ -76,10 +76,9 @@ bot.dialog('/uploadImage', [
     results.response.forEach(function (attachment) {
         visionClient.vision.ocr({
           url: attachment.contentUrl,
-          language: 'en',
-          detectOrientation: true
+          language: 'en'
         }).then(function (response) {
-          session.send(response.text);
+          session.endDialog(attachment.contentUrl);
         });
     });
     
