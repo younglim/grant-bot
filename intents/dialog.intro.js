@@ -3,6 +3,13 @@ module.exports = {
   callbackProvider: (builder) => {
     return [
       function(session, args, next) {
+        console.log('|----------------------session-----------------------|');
+        console.log(session);
+        console.log('|---------------------/session-----------------------|');
+        console.log('|------------------------args------------------------|');
+        console.log(args);
+        console.log('|-----------------------/args------------------------|');
+        console.log(args);
         session.send('1');
         next();
       },
