@@ -78,9 +78,7 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          var msg =  builder.Message(session)
-          .ntext(response.body, response.body);
-          session.endDialog(msg);
+          session.send(attachment.contentUrl);
         });
     });
     
