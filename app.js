@@ -92,9 +92,15 @@ bot.dialog('/uploadImage', [
               });
             });
 
-            var currencyAmount = ocrText.match(/((SGD\s*)|(\$\s*))\d+\.?\d*/g);
+            var currencyAmount = ocrText.match(/(((SGD|USD)\s*)|(\$\s*))\d+\.?\d*/g);
             var others = ocrText;
-            session.endDialog("I have saved your claim of " + currencyAmount+ ".");
+
+            if (currencyAmount !== null) {
+              session.endDialog("I have added your invoice of " + currencyAmount+ " .");
+            } else {
+              session.send("I couldn't read your document.\n\nDebug info:`"+ocrText+"`");
+            }
+
           } else {
             session.send("I couldn't read your document. Please send it in JPG or PNG format again.");
           }
