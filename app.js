@@ -70,7 +70,7 @@ var visionClient = new oxford.Client(config.visionApiCredentials.key);
 
 bot.dialog('/uploadImage', [
   (session) => {
-    builder.Prompts.attachment(session, "Upload an image and I'll send it back to you.");
+    builder.Prompts.attachment(session, "Upload the document and I will keep track of the claim.");
   },
   (session, results) => {
   
@@ -92,9 +92,9 @@ bot.dialog('/uploadImage', [
             });
 
             var currencyAmount = ocrText.match(/\$\S+/g);
-            session.endDialog(currentyAmount + " "+ ocrText);
+            session.endDialog(currencyAmount + " "+ ocrText);
           } else {
-            session.send("We couldn't read your document. Please send it in JPG or PNG format again.");
+            session.send("I couldn't read your document. Please send it in JPG or PNG format again.");
           }
          
 
