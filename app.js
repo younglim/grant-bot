@@ -5,6 +5,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var server = restify.createServer();
 var oxford = require('project-oxford');
+var telegramDebug = require('./telegram-debug');
 
 /**
  * START BOOTSTRAP
@@ -78,18 +79,28 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          console.log(arguments);
-          var ocrText = "";
+          
+          if ((typeof response.regions !== 'undefined') && (response.regions.length > 0) && (typeof response.regions[0].lines !== 'undefined')) {
 
-          for (i = 0; i < response.regions[0].lines[0].words[0]; i++) { 
-              ocrText += response.regions[0].lines[0].words[0].text[i] + " ";
+            var data = response.regions[0];
+            var ocrText = '';
+
+            data.lines.forEach(line => {
+                line.words.forEach(word => {
+                  ocrText += word.text +" ";
+                });
+            });
+
+            var currencyAmount = ocrText.match(/\$\S+/g);
+            session.endDialog(currentyAmount + " "+ ocrText);
+          } else {
+            session.send("We couldn't read your document. Please send it in JPG or PNG format again.");
           }
-
-          console.log(ocrText);
-          session.endDialog(ocrText);
+         
 
         }, function(err) {
           console.log(arguments);
+          session.endDialog("We're sorry, an unknown error has occured.");
         });
     });
     
