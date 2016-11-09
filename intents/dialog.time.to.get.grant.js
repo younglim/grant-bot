@@ -9,10 +9,12 @@ function getFlow(builder) {
       setTimeout(function() {
         session.send('If your grant is approved, you can submit your claim to get your grant money!');
         var msg = new builder.Message(session)
-          .attachments([{
-            contentType: "image/jpeg",
-            contentUrl: "https://s-media-cache-ak0.pinimg.com/236x/83/03/e5/8303e5de43d1424c04f18f90bc8f9df9.jpg"
-          }]);
+          .attachments([
+            new builder.HeroCard(session)
+              .images([
+                builder.CardImage.create(session, "https://s-media-cache-ak0.pinimg.com/236x/83/03/e5/8303e5de43d1424c04f18f90bc8f9df9.jpg")
+              ])
+          ]);
         session.endDialog(msg);
       }, 3000);
     },
