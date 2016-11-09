@@ -84,7 +84,7 @@ bot.dialog('/uploadImage', [
 
           data.lines.forEach(line => {
             line.words.forEach(word => {
-              ocrText += ${word.text} ;
+              ocrText += word.text +" ";
             });
           });
 
