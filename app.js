@@ -78,8 +78,8 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          // console.log(arguments);
-          var ocrText = new String();
+          console.log(arguments);
+          var ocrText = "";
 
           for (i = 0; i < response.regions[0].lines[0].words[0]; i++) { 
               ocrText += response.regions[0].lines[0].words[0].text[i] + " ";
@@ -89,7 +89,7 @@ bot.dialog('/uploadImage', [
           session.endDialog(ocrText);
 
         }, function(err) {
-          // console.log(arguments);
+          console.log(arguments);
         });
     });
     
