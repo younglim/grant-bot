@@ -79,7 +79,7 @@ bot.dialog('/uploadImage', [
           language: 'en'
         }).then(function (response) {
           // console.log(arguments);
-          console.log(response.regions[0].lines[0].words[0].text[0];
+          console.log(response.regions[0].lines[0].words[0].text[0]);
           // session.endDialog(response.regions[0]);
 
         }, function(err) {
