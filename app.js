@@ -79,20 +79,24 @@ bot.dialog('/uploadImage', [
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          var data = response.regions[0];
-          var ocrText = '';
+          
+          if (typeof response.regions != 'undefined' && typeof response.lines != 'undefined') {
 
-          if (data.lines !== 'undefined') {
+            var data = response.regions[0];
+            var ocrText = '';
+
             data.lines.forEach(line => {
                 line.words.forEach(word => {
                   ocrText += word.text +" ";
                 });
             });
+
+            var currencyAmount = ocrText.match(/\$\S+/g);
+            session.endDialog(currentyAmount + " "+ ocrText);
           } else {
             session.send("We couldn't read your document. Please send it in JPG or PNG format again.");
           }
          
-          session.endDialog(ocrText);
 
         }, function(err) {
           console.log(arguments);
