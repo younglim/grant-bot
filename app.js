@@ -47,12 +47,6 @@ intentListing.forEach(intent => {
   const currentIntent = require(path.join(pathToIntents, `/${intent}`));
   dialog.matches(currentIntent.label, currentIntent.callbackProvider(builder));
 });
-dialog.matches('Apply for grant', builder.DialogAction.send('To apply for a grant, you need a CorpPass account. Does your company have a CorpPass administrator?'));
-dialog.matches('Available grants', builder.DialogAction.send('There are 2 grants now – International Enterprise Singapore\’s Market Readiness Assistance grant and Building and Construction Authority\’s Building Information Model Fund.'));
-dialog.matches('Application duration', builder.DialogAction.send('It should take you about 20 minutes to complete a grant application, if you have the right documents.'));
-dialog.matches('Time to get grant', builder.DialogAction.send('After you submit your application, the agency giving out the grant will need 2-4 weeks to process it. If your grant is approved, you can submit your claim to get your grant money.'));
-dialog.matches('Grant Amount', builder.DialogAction.send('Different grants have different support levels, depending on what you\'re implementing or upgrading.'));
-dialog.matches('BGP Intro', builder.DialogAction.send('Business Grants Portal brings government grants for businesses into one place, so it\'s easier to find and apply for the grants you need. The grant support you receive will depend on your situation.'));
 dialog.matches('Latest News', [
   function(session, args, next) {
     superagent.get('https://businessgrants.gov.sg/api/v1/news')
