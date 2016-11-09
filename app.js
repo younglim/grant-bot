@@ -93,7 +93,8 @@ bot.dialog('/uploadImage', [
             });
 
             var currencyAmount = ocrText.match(/(SGD\s*)*(\$\s*)*\d+\.?\d*/g);
-            session.endDialog("We have saved " + currencyAmount+ " as a claim.");
+            var others = ocrText;
+            session.endDialog("We have saved " + currencyAmount+ " as a claim. Others: +" + others);
           } else {
             session.send("I couldn't read your document. Please send it in JPG or PNG format again.");
           }
