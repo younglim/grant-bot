@@ -47,18 +47,7 @@ intentListing.forEach(intent => {
   const currentIntent = require(path.join(pathToIntents, `/${intent}`));
   dialog.matches(currentIntent.label, currentIntent.callbackProvider(builder));
 });
-dialog.matches('Latest News', [
-  function(session, args, next) {
-    superagent.get('https://businessgrants.gov.sg/api/v1/news')
-      .end((err, res) => {
-        var card = new builder.HeroCard(session)
-            .title(`${res.body.news[0].title}`)
-            .text(`${res.body.news[0].content}`);
-        var msg = new builder.Message(session).attachments([card]);
-        session.send(msg);
-      });
-  }
-]);// builder.DialogAction.send('We\'ve just launched the Building Information Model Fund from Building and Construction Authority (BCA).'));
+// builder.DialogAction.send('We\'ve just launched the Building Information Model Fund from Building and Construction Authority (BCA).'));
 //
 dialog.onDefault(builder.DialogAction.send("It went through"));
 dialog.matches('Upload', function (session, results) {
@@ -72,19 +61,18 @@ bot.dialog('/uploadImage', [
     builder.Prompts.attachment(session, "Upload an image and I'll send it back to you.");
   },
   (session, results) => {
-    var msg = new builder.Message(session)
-        .ntext("I got %d attachment.", "I got %d attachments.", results.response.length);
-
+  
     results.response.forEach(function (attachment) {
-        msg.addAttachment(attachment);
         visionClient.vision.ocr({
           url: attachment.contentUrl,
           language: 'en'
         }).then(function (response) {
-          session.send(response);
+          var msg =  builder.Message(session)
+          .ntext(response.body, response.body);
+          session.endDialog(msg);
         });
     });
-    session.endDialog(msg);
+    
   }
 ]);
 if(config.environment === 'production') {
