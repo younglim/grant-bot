@@ -1,3 +1,5 @@
+const telegramDebug = require('../telegram-debug');
+
 module.exports = {
   label: 'Test Joseph',
   callbackProvider: (builder) => {
@@ -7,7 +9,7 @@ module.exports = {
         console.log(session);
         console.log('|---------------------/session-----------------------|');
         console.log('|------------------------args------------------------|');
-        console.log(args);
+        telegramDebug.logJson(args);
         console.log('|-----------------------/args------------------------|');
         next();
       },
