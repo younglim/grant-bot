@@ -1,27 +1,19 @@
+const possibleReplies = [
+  "Sorry, I'm not sure what you mean by that.",
+  "Sorry, that's outside my area of expertise. I can only help you with questions about grants.",
+  "You know I'm just a bot right?",
+  "I'm sorry I can't help with that.",
+  "You must be getting frustrated. Let me get a human to help you."
+]; // add more if needed, no need to change below code, it's based on the length
+
 module.exports = {
   label: 'None',
   callbackProvider: (builder) => {
     return [
-      function (session) {
-        builder.Prompts.choice(session, "Choose an option:", 'Flip A Coin|Roll Dice|Magic 8-Ball|Quit');
-      },
-      function (session, results) {
-        switch (results.response.index) {
-          case 0:
-            session.beginDialog('/flipCoin');
-            break;
-          case 1:
-            session.beginDialog('/rollDice');
-            break;
-          case 2:
-            session.beginDialog('/magicBall');
-            break;
-          default:
-            session.endDialog();
-            break;
-        }
-      },
-      builder.DialogAction.send('I\'m just a bot. I don\'t know everything!')
+      function (session, args, next) {
+        session.dialogData.reply = possibleReplies[Math.round((Math.random()*(possibleReplies.length)))];
+        session.send(session.dialogData.reply);
+      }
     ];
   }
 };
