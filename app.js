@@ -128,11 +128,11 @@ bot.dialog('/uploadImage', [
 if(config.environment === 'production') {
   server.get('/users', function(req, res, next) {
     const User = require('./users');
-    res.json(User.getUsers());
+    res.send(User.getUsers());
   });
-  server.get('/users/:id', function(req, res, next) {
+  server.get('/user/:id', function(req, res, next) {
     const User = require('./users');
-    User.getU
+    res.json(User.getId(req.params.id));
   });
   server.use(restify.bodyParser({ mapParams: true }));
   server.post('/api/messages', [function(req, res, next) {
