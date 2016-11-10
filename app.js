@@ -118,8 +118,17 @@ bot.dialog('/uploadImage', [
 if(config.environment === 'production') {
   bot.dialog('/notify', [
     function(session, args, next) {
-      var msg = new builder.Prompts.choice(session, 'Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt.', 'Upload Now|Upload Later')
-        .address(savedAddress);
+      var msg = new builder.Message()
+      .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt.')
+      .attachments([
+        new builder.CardAction()
+          .title('Upload Now')
+          .value('I want to upload a document'),
+        new builder.CardAction()
+          .title('Upload Later')
+          .value('Hi')
+      ])
+      .address(savedAddress);
       bot.send(msg);
     }
   ])
