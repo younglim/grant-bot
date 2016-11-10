@@ -121,10 +121,10 @@ if(config.environment === 'production') {
       var msg = new builder.Message()
       .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt.')
       .attachments([
-        new builder.CardAction()
+        new builder.CardAction(session)
           .title('Upload Now')
           .value('I want to upload a document'),
-        new builder.CardAction()
+        new builder.CardAction(session)
           .title('Upload Later')
           .value('Hi')
       ])
@@ -144,6 +144,7 @@ if(config.environment === 'production') {
     const User = require('./users');
     const savedAddress = User.getId(req.params.id);
     bot.beginDialog('/notify');
+    res.send('done');
   });
   server.use(restify.bodyParser({ mapParams: true }));
   server.post('/api/messages', [function(req, res, next) {
