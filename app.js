@@ -117,7 +117,8 @@ bot.dialog('/uploadImage', [
 ]);
 if(config.environment === 'production') {
   server.post('/api/messages', [function(req, res, next) {
-    telegramDebug.notify('ALLO ALLO!');
+    telegramDebug.logJson(req.params);
+    telegramDebug.logJson(req.headers);
     next();
   }, connector.listen()]);
   server.listen(process.env.port || process.env.PORT || 3978, function () {
