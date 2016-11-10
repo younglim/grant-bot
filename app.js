@@ -7,6 +7,7 @@ var server = restify.createServer();
 var oxford = require('project-oxford');
 var telegramDebug = require('./telegram-debug');
 var jsonPrettify = require('json-pretty');
+var telegramDebug = require('./telegram-debug');
 
 /**
  * START BOOTSTRAP
@@ -30,9 +31,6 @@ var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [
   recognizer
 ] });
-dialog.begin = function(session, reply) {
-  this.replyReceived(session);
-}
 
 /**
  * START CONTROLLER
@@ -93,13 +91,15 @@ bot.dialog('/uploadImage', [
               });
             });
 
-            var currencyAmount = ocrText.match(/(((SGD|USD|TOTAL|Total|total|^)(:|\s)*)|(\$\s*))(\d,?.?)+.?\d*/g);
+            var currencyAmount = ocrText.match(/((([A-Z]{2,3}|BALANCE|Balance|TOTAL|Total|total|^)\s?(DUE|Due)*(:|\s)*)|(\$\s*))(\d,?.?)+.?\d*/g);
             var others = ocrText;
 
             if (currencyAmount !== null) {
-              session.endDialog("I have added your invoice of " + currencyAmount+ " .");
+              telegramDebug.notify(ocrText);
+              session.endDialog("I have added your invoice of " + currencyAmount.split(/[, ]+/).pop() + " .");
+
             } else {
-              session.send("I couldn't read your document, please send a clearer image.\n\nDebug info:\n\n`"+jsonPrettify(response)+"`");
+              session.send("I couldn't read your document, please send a clearer image.");
             }
 
           } else {
@@ -118,6 +118,7 @@ bot.dialog('/uploadImage', [
 if(config.environment === 'production') {
   server.post('/api/messages', connector.listen());
   server.listen(process.env.port || process.env.PORT || 3978, function () {
+    telegramDebug.notify('Bot started in production mode!');
     console.log('%s listening to %s', server.name, server.url);
   });
 }

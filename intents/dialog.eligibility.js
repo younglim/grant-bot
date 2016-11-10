@@ -2,39 +2,50 @@ module.exports = {
   label: 'Eligibility',
   callbackProvider: (builder) => {
     return [
-      function(session, args) {
+      function(session, args, next) {
         session.sendTyping();
-        setTimeout(function() {
-          session.send('Each grant has slightly different eligibility criteria but most would require your business to be registered in Singapore with a minimum percentage of local shareholders.');
-          session.sendTyping();
-        }, 1000);
-        setTimeout(function() {
-          builder.Prompts.choice(
-            session,
-            'When you apply for a grant, the first part of the application states the eligibility criteria for that specific grant. Which grant do you want to apply for?',
-            'International Enterprise Singapore\'s Market Readiness Assistance|Building & Construction Authorities Building Information Model Fund|I don\'t know'
-          );
-        }, 2000);
+        setTimeout(function() { next(); }, 1500);
+      },
+      function(session, args, next) {
+        session.send('Each grant has slightly different eligibility criteria but most would require your business to be registered in Singapore with a minimum percentage of local shareholders.');
+        session.sendTyping();
+        setTimeout(function() { next(); }, 1500);
+      },
+      function(session, args, next) {
+        builder.Prompts.choice(
+          session,
+          'When you apply for a grant, the first part of the application states the eligibility criteria for that specific grant. Which grant do you want to apply for?',
+          'IE-MRA|BCA-BIM|I don\'t know'
+        );
       },
       function(session, result, next) {
         var msg = new builder.Message(session)
-          .attachments([
-              new builder.HeroCard(session)
-                  .title("Hero Card")
-                  .subtitle("The Space Needle is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.ThumbnailCard(session)
+                  .title("International Enterprise Singapore\'s Market Readiness Assistance")
+                  .subtitle("International Enterprise Singapore\'s Market Readiness Assistance")
                   .images([
-                      builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
+                      builder.CardImage.create(session, "http://www.iesingapore.gov.sg/images/main-logo.jpg")
+                          .tap(builder.CardAction.showImage(session, "http://www.iesingapore.gov.sg/images/main-logo.jpg")),
                   ])
-                  .tap(builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Space_Needle")),
-              new builder.HeroCard(session)
-                  .title("Hero Card 2")
-                  .subtitle("The Space Needle is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
+                  .buttons([
+                      builder.CardAction.openUrl(session, "http://www.iesingapore.gov.sg/Assistance/Market-Readiness-Assistance/Financial-Assistance/Market-Readiness-Assistance-Grant", "Wikipedia"),
+                      builder.CardAction.imBack(session, "select:100", "Select")
+                  ]),
+                new builder.ThumbnailCard(session)
+                  .title("Building & Construction Authorities Building Information Model Fund")
+                  .subtitle("Building & Construction Authorities Building Information Model Fund")
                   .images([
-                      builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
+                      builder.CardImage.create(session, "http://www.bimjunction.com/blog/news_image/32986A-Building-information-model1.png")
+                        .tap(builder.CardAction.showImage(session, "http://www.bimjunction.com/blog/news_image/32986A-Building-information-model1.png")),
                   ])
-                  .tap(builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Space_Needle"))
-          ]);
-        session.send(msg);
+                  .buttons([
+                      builder.CardAction.openUrl(session, "https://www.smeportal.sg/content/smeportal/en/moneymatters/grants/building-information-model-bim.html", "Wikipedia"),
+                      builder.CardAction.imBack(session, "select:101", "Select")
+                  ]),
+            ]);
+        builder.Prompts.choice(session, msg, "select:100|select:101");
         /**
         if(result.response.index === 2) {
           session.Prompts.choice(
