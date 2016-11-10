@@ -14,7 +14,7 @@ function getId(userId) {
 };
 
 function getUsers() {
-  const output = '<html><body style="text-align:center"><h2>';
+  var output = '<html><body style="text-align:center"><h2>';
   USERS.forEach(user => {
     output += `<a href="/user/${user.user.id}">Send demo to ${user.user.name} (${user.user.id}) on ${user.channelId}</a><br />`
   });
