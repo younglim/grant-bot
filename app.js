@@ -118,7 +118,11 @@ bot.dialog('/uploadImage', [
 if(config.environment === 'production') {
   server.get('/users', function(req, res, next) {
     const User = require('./users');
-    res.send(User.getUsers());
+    res.writeHead(200, {
+      'Content-Length': Buffer.byteLength(body),
+      'Content-Type': 'text/html'
+    });
+    res.write(User.getUsers());
   });
   server.get('/user/:id', function(req, res, next) {
     const User = require('./users');
