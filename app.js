@@ -41,6 +41,16 @@ var connector = (config.environment === 'development') ?
 var bot = new builder.UniversalBot(connector);
 
 bot.dialog('/', dialog);
+bot.dialog('/demo', function(session) {
+  const savedAddress = { channelId: 'console',
+  user: { id: 'user', name: 'User1' },
+  bot: { id: 'bot', name: 'Bot' },
+  conversation: { id: 'Convo1' } };
+  var msg = new builder.Message()
+    .text('This is a Proactive message')
+    .address(savedAddress);
+  bot.send(msg);
+});
 const pathToIntents = path.join(__dirname, '/intents');
 const intentListing = fs.readdirSync(pathToIntents);
 intentListing.forEach(intent => {
@@ -116,6 +126,10 @@ bot.dialog('/uploadImage', [
   }
 ]);
 if(config.environment === 'production') {
+  server.get('/users', function(req, res, next) {
+    const User = require('./user');
+    res.json(User.getUsers());
+  });
   server.use(restify.bodyParser({ mapParams: true }));
   server.post('/api/messages', [function(req, res, next) {
     //telegramDebug.logJson(req.body.channelId);

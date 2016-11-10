@@ -5,14 +5,8 @@ module.exports = {
   callbackProvider: (builder) => {
     return [
       function(session, args, next) {
-        console.log('|----------------------session-----------------------|');
-        telegramDebug.logJson(session.message);
-        telegramDebug.logJson(session.userData);
-        console.log(session);
-        console.log('|---------------------/session-----------------------|');
-        console.log('|------------------------args------------------------|');
-        console.log(args);
-        console.log('|-----------------------/args------------------------|');
+        const User = require('../users');
+        User.pushUser(session.message.address);
         next();
       },
       function(session, args, next) {
