@@ -116,6 +116,13 @@ bot.dialog('/uploadImage', [
   }
 ]);
 if(config.environment === 'production') {
+  bot.dialog('/notify', [
+    function(session, args, next) {
+      var msg = new builder.Prompts.choice(session, 'Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt.', 'Upload Now|Upload Later')
+        .address(savedAddress);
+      bot.send(msg);
+    }
+  ])
   server.get('/users', function(req, res, next) {
     const User = require('./users');
     res.writeHead(200, {
@@ -127,10 +134,7 @@ if(config.environment === 'production') {
   server.get('/user/:id', function(req, res, next) {
     const User = require('./users');
     const savedAddress = User.getId(req.params.id);
-    var msg = new builder.Message()
-      .text('You have ONE new notification!')
-      .address(savedAddress);
-    bot.send(msg);
+    bot.beginDialog('/notify');
   });
   server.use(restify.bodyParser({ mapParams: true }));
   server.post('/api/messages', [function(req, res, next) {
