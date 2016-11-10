@@ -6,7 +6,6 @@ function getFlow(builder) {
     },
     function(session, result, next) {
       if (result.response) {
-        session.send('CorpPass or Singapore Corporate Access is a secure way for your business to transact online with the goverment. To apply for a grant, you need a CorpPass account.');
         session.beginDialog('/corp-pass');
       } else {
         session.send('What else can I help with today?');

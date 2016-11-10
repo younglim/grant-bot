@@ -6,7 +6,7 @@ function getFlow(builder) {
     },
     function(session, result, next) {
       if (result.response) {
-          session.send("Get your CorpPass account for you and assign an administrator to create an appropriate Business Grants Portal e-Service role. Then, simply log in to Business Grants Portal with your CorpPass account. I'll be happy to help more when you've logged in.");
+          session.send("Get your CorpPass administrator to create an account for you and assign an appropriate Business Grants Portal e-Service role. Then, simply log in to Business Grants Portal with your CorpPass account. I'll be happy to help more when you've logged in.");
       } else {
         session.send("Find out how to appoint a CorpPass administrator for your company here: https://www.corppass.gov.sg/cpauth/login/homepage?TAM_OP=login");
       }
