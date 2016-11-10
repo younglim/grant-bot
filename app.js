@@ -79,7 +79,7 @@ bot.dialog('/uploadImage', [
           language: 'en'
         }).then(function (response) {
           
-          if ((typeof response.regions !== 'undefined') && (response.regions.length > 0) && (typeof response.regions[0].lines !== 'undefined')) {
+          if ((typeof response !== 'undefined') && (typeof response.regions !== 'undefined') && (response.regions.length > 0) && (typeof response.regions[0].lines !== 'undefined')) {
 
             var ocrText = '';
 
