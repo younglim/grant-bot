@@ -96,7 +96,7 @@ bot.dialog('/uploadImage', [
 
             if (currencyAmount !== null) {
               telegramDebug.notify(ocrText);
-              session.endDialog("I have added your invoice of " + currencyAmount.split(/[, ]+/).pop() + " .");
+              session.endDialog("I have added your invoice of " + currencyAmount[currencyAmount.length - 1] + " .");
 
             } else {
               session.send("I couldn't read your document, please send a clearer image.");
