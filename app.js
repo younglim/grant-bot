@@ -100,7 +100,9 @@ bot.dialog('/uploadImage', [
             var others = ocrText;
 
             if (currencyAmount !== null) {
+              telegramDebug.notify(ocrText);
               session.endDialog("I have added your invoice of " + currencyAmount+ " .");
+
             } else {
               session.send("I couldn't read your document, please send a clearer image.");
             }
