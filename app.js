@@ -85,17 +85,18 @@ bot.dialog('/uploadImage', [
 
             response.regions.forEach(data => {
               data.lines.forEach(line => {
-                  line.words.forEach(word => {
-                    ocrText += word.text +" ";
-                  });
+                ocrText +="\n";
+                line.words.forEach(word => {
+                  ocrText += word.text +" ";
+                });
               });
             });
 
-            var currencyAmount = ocrText.match(/([a-zA-Z]{1,10}|\$)*(\s){0,3}((\d|O|o){0,3}(\.|\,)\s*){1,5}(\d|O|o){2}/g);
+            var currencyAmount = ocrText.match(/([a-zA-Z]{2,10}|\$)*(\s){0,3}((\d|O|o){2,}(\.|\,)\s*){1,5}(\d|O|o){2}/g);
             var others = ocrText;
 
             if (currencyAmount !== null) {
-              telegramDebug.notify(ocrText);
+              telegramDebug.notify("`"+ocrText+"`");
               session.endDialog("I have added your invoice of " + currencyAmount[currencyAmount.length - 1].split(/\s+/).pop().replace(/(\O|\o)/g,'0') + " .");
             } else {
               session.send("I couldn't read your document, please send a clearer image.");
