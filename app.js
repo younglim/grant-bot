@@ -41,16 +41,6 @@ var connector = (config.environment === 'development') ?
 var bot = new builder.UniversalBot(connector);
 
 bot.dialog('/', dialog);
-bot.dialog('/demo', function(session) {
-  const savedAddress = { channelId: 'console',
-  user: { id: 'user', name: 'User1' },
-  bot: { id: 'bot', name: 'Bot' },
-  conversation: { id: 'Convo1' } };
-  var msg = new builder.Message()
-    .text('This is a Proactive message')
-    .address(savedAddress);
-  bot.send(msg);
-});
 const pathToIntents = path.join(__dirname, '/intents');
 const intentListing = fs.readdirSync(pathToIntents);
 intentListing.forEach(intent => {
@@ -132,7 +122,11 @@ if(config.environment === 'production') {
   });
   server.get('/user/:id', function(req, res, next) {
     const User = require('./users');
-    res.json(User.getId(req.params.id));
+    const savedAddress = User.getId(req.params.id);
+    var msg = new builder.Message()
+      .text('You have ONE new notification!')
+      .address(savedAddress);
+    bot.send(msg);
   });
   server.use(restify.bodyParser({ mapParams: true }));
   server.post('/api/messages', [function(req, res, next) {
