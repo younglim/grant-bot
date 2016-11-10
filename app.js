@@ -116,11 +116,10 @@ bot.dialog('/uploadImage', [
   }
 ]);
 if(config.environment === 'production') {
-  server.use('/api/messages', function(req, res, next) {
-    console.log('!!!!!!');
+  server.post('/api/messages', [function(req, res, next) {
+    telegramDebug.notify('ALLO ALLO!');
     next();
-  });
-  server.post('/api/messages', connector.listen());
+  }, connector.listen()]);
   server.listen(process.env.port || process.env.PORT || 3978, function () {
     telegramDebug.notify('Bot started in production mode!');
     console.log('%s listening to %s', server.name, server.url);
