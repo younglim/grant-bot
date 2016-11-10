@@ -119,7 +119,7 @@ if(config.environment === 'production') {
   server.get('/users', function(req, res, next) {
     const User = require('./users');
     res.writeHead(200, {
-      'Content-Length': Buffer.byteLength(body),
+      'Content-Length': Buffer.byteLength(User.getUsers()),
       'Content-Type': 'text/html'
     });
     res.write(User.getUsers());
