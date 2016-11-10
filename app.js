@@ -96,12 +96,12 @@ bot.dialog('/uploadImage', [
               });
             });
 
-            var currencyAmount = ocrText.match(/((([A-Z]{2,3}|TOTAL|Total|total|^)\s?(DUE|Due)*(:|\s)*)|(\$\s*))(\d,?.?)+.?\d*/g);
+            var currencyAmount = ocrText.match(/((([A-Z]{2,3}|BALANCE|Balance|TOTAL|Total|total|^)\s?(DUE|Due)*(:|\s)*)|(\$\s*))(\d,?.?)+.?\d*/g);
             var others = ocrText;
 
             if (currencyAmount !== null) {
               telegramDebug.notify(ocrText);
-              session.endDialog("I have added your invoice of " + currencyAmount+ " .");
+              session.endDialog("I have added your invoice of " + currencyAmount.split(/[, ]+/).pop() + " .");
 
             } else {
               session.send("I couldn't read your document, please send a clearer image.");
