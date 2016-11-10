@@ -1,7 +1,7 @@
 function getFlow(builder) {
   return [
     function (session, args, next) {
-      session.send('These are the 2 grants:');
+      session.send('These are the 2 grants available now:');
       var msg = new builder.Message(session)
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments([
@@ -55,11 +55,11 @@ function getFlow(builder) {
       builder.Prompts.confirm(session, "Would you like to know how you can apply for this grant?");
     },
     function (session, results, next) {
-      results.response ?
+      if (results.response) {
         session.replaceDialog('/corp-pass')
-        :
-        session.send("What else can I help you with today?");
-        next();
+      } else {
+        session.send("What else can I help you with today?")
+      }
     },
     function(session) {
       session.endDialog();
