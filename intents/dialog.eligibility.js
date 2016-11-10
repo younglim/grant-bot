@@ -22,23 +22,23 @@ module.exports = {
         var msg = new builder.Message(session)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
-                new builder.HeroCard(session)
+                new builder.ThumbnailCard(session)
                   .title("International Enterprise Singapore\'s Market Readiness Assistance")
                   .subtitle("International Enterprise Singapore\'s Market Readiness Assistance")
                   .images([
-                      builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
-                          .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
+                      builder.CardImage.create(session, "http://www.iesingapore.gov.sg/images/main-logo.jpg")
+                          .tap(builder.CardAction.showImage(session, "http://www.iesingapore.gov.sg/images/main-logo.jpg")),
                   ])
                   .buttons([
                       builder.CardAction.openUrl(session, "http://www.iesingapore.gov.sg/Assistance/Market-Readiness-Assistance/Financial-Assistance/Market-Readiness-Assistance-Grant", "Wikipedia"),
                       builder.CardAction.imBack(session, "select:100", "Select")
                   ]),
-                new builder.HeroCard(session)
+                new builder.ThumbnailCard(session)
                   .title("Building & Construction Authorities Building Information Model Fund")
                   .subtitle("Building & Construction Authorities Building Information Model Fund")
                   .images([
-                      builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
-                        .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
+                      builder.CardImage.create(session, "http://www.bimjunction.com/blog/news_image/32986A-Building-information-model1.png")
+                        .tap(builder.CardAction.showImage(session, "http://www.bimjunction.com/blog/news_image/32986A-Building-information-model1.png")),
                   ])
                   .buttons([
                       builder.CardAction.openUrl(session, "https://www.smeportal.sg/content/smeportal/en/moneymatters/grants/building-information-model-bim.html", "Wikipedia"),
