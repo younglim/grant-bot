@@ -127,7 +127,7 @@ bot.dialog('/uploadImage', [
 ]);
 if(config.environment === 'production') {
   server.get('/users', function(req, res, next) {
-    const User = require('./user');
+    const User = require('./users');
     res.json(User.getUsers());
   });
   server.use(restify.bodyParser({ mapParams: true }));
