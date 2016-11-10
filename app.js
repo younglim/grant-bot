@@ -130,6 +130,10 @@ if(config.environment === 'production') {
     const User = require('./users');
     res.json(User.getUsers());
   });
+  server.get('/users/:id', function(req, res, next) {
+    const User = require('./users');
+    User.getU
+  });
   server.use(restify.bodyParser({ mapParams: true }));
   server.post('/api/messages', [function(req, res, next) {
     //telegramDebug.logJson(req.body.channelId);

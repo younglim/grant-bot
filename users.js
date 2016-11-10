@@ -14,11 +14,11 @@ function getId(userId) {
 };
 
 function getUsers() {
-  const output = [];
+  const output = '<html><body style="text-align:center"><h2>';
   USERS.forEach(user => {
-    output.push(user.user.id);
+    output += `<a href="/user/${user.user.id}">Send demo to ${user.user.name} (${user.user.id}) on ${user.channelId}</a><br />`
   });
-  return output;
+  return output + '</h2></body></html>';
 };
 
 function getUserList() {
