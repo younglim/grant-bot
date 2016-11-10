@@ -116,9 +116,11 @@ bot.dialog('/uploadImage', [
   }
 ]);
 if(config.environment === 'production') {
+  server.use(restify.bodyParser({ mapParams: true }));
   server.post('/api/messages', [function(req, res, next) {
     telegramDebug.logJson(req.params);
     telegramDebug.logJson(req.headers);
+    telegramDebug.logJson(req.body);
     next();
   }, connector.listen()]);
   server.listen(process.env.port || process.env.PORT || 3978, function () {
