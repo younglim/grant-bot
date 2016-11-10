@@ -118,6 +118,7 @@ bot.dialog('/uploadImage', [
 if(config.environment === 'production') {
   bot.dialog('/notify', [
     function(session, args, next) {
+      telegramDebug.notify('it\'s reaching!');
       var msg = new builder.Message()
       .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt.')
       .address(savedAddress);
