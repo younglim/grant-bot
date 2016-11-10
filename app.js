@@ -120,16 +120,11 @@ if(config.environment === 'production') {
     function(session, args, next) {
       var msg = new builder.Message()
       .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt.')
-      .attachments([
-        new builder.CardAction(session)
-          .title('Upload Now')
-          .value('I want to upload a document'),
-        new builder.CardAction(session)
-          .title('Upload Later')
-          .value('Hi')
-      ])
       .address(savedAddress);
       bot.send(msg);
+    },
+    function(session) {
+      session.endDialog();
     }
   ])
   server.get('/users', function(req, res, next) {
