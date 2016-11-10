@@ -60,6 +60,7 @@ function getFlow(builder) {
     (session, result) => {
       console.log(session);
       console.log(result);
+      session.endDialog();
     },
     /*
     function(session, result) {
