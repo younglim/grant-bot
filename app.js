@@ -109,7 +109,7 @@ bot.dialog('/uploadImage', [
 
         }, function(err) {
           console.log(arguments);
-          session.endDialog("We're sorry, an unknown error has occured.");
+          session.endDialog("I'm sorry, an unknown error has occured. Please send your question again.");
         });
     });
     
