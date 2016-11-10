@@ -119,10 +119,8 @@ if(config.environment === 'production') {
   bot.dialog('/notify', [
     function(session, args, next) {
       telegramDebug.notify('it\'s reaching!');
-      var msg = new builder.Message()
-      .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt.')
-      .address(savedAddress);
-      bot.send(msg);
+      session.send('hello');
+      next();
     },
     function(session) {
       session.endDialog();
@@ -139,6 +137,10 @@ if(config.environment === 'production') {
   server.get('/user/:id', function(req, res, next) {
     const User = require('./users');
     const savedAddress = User.getId(req.params.id);
+    var msg = new builder.Message()
+      .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt.')
+      .address(savedAddress);
+    bot.send(msg);
     bot.beginDialog('/notify');
     res.send('done');
   });
