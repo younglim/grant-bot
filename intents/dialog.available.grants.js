@@ -54,8 +54,12 @@ function getFlow(builder) {
     function (session, results) {
       builder.Prompts.confirm(session, "Would you like to know how you can apply for this grant?");
     },
-    function (session, results) {
-      results.response ? session.send("Yay") : session.send("Nah");
+    function (session, results, next) {
+      results.response ?
+        session.replaceDialog('/corp-pass')
+        :
+        session.send("What else can I help you with today?");
+        next();
     },
     function(session) {
       session.endDialog();
