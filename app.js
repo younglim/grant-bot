@@ -92,7 +92,7 @@ bot.dialog('/uploadImage', [
               });
             });
 
-            var currencyAmount = ocrText.match(/([a-zA-Z]{2,10}|\$)*(\s){0,3}((\d|O|o){2,}(\.|\,)\s*){1,5}(\d|O|o){2}/g);
+            var currencyAmount = ocrText.match(/([a-zA-Z]{2,10}|\$)*(\s){0,3}((\d|O|o)+(\.|\,)\s*){1,5}(\d|O|o){2}/g);
             var others = ocrText;
 
             if (currencyAmount !== null) {
