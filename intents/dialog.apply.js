@@ -15,21 +15,14 @@ function getFlow(builder) {
       }
       setTimeout(next, 1000);
     },
-    (session) => {
-      builder.Prompts.confirm(session, 
-        'I\'ll be happy to help more when you\'ve logged in.\n\n\Is there anything else I can help you with today?'
+    (session, args, next) => {
+      session.send(session, 
+        'I\'ll be happy to help more when you\'ve logged in.\n'
       );
+      next();
     },
-    (session, result, next) => {
-      const userSaidYes = result.response;
-      if(userSaidYes) {
-        session.send('Ask away!');
-        session.endDialog();
-      } else {
-        session.send('Thank you for stopping by. Drop by anytime if you need more help.');
-        session.endConversation();
-      }
-    }
+    require('../utility/dialog.anything.else.js')(builder),
+    require('../utility/dialog.anything.else.handler.js')()
   ];
 };
 
