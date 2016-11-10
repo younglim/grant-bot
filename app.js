@@ -116,11 +116,53 @@ bot.dialog('/uploadImage', [
   }
 ]);
 if(config.environment === 'production') {
-  server.post('/api/messages', function(req, res, next) {
-    console.log('!!!!!!');
+  server.use(restify.bodyParser({ mapParams: true }));
+  server.post('/api/messages', [function(req, res, next) {
+    //telegramDebug.logJson(req.body.channelId);
+    //telegramDebug.logJson(req.body.channelData.message.chat);
+    var exampleData = {
+      "channelData": {
+        "message": {
+          "chat": {
+            "first_name": "Joseph Matthias",
+            "id": 267230627,
+            "last_name": "Goh",
+            "type": "private",
+            "username": "zephinzer"
+          },
+          "date": 1478760927,
+          "from": {
+            "first_name": "Joseph Matthias",
+            "id": 267230627,
+            "last_name": "Goh",
+            "username": "zephinzer"
+          },
+          "message_id": 2738,
+          "text": "am i eligible?"
+        },
+        "update_id": 619114743
+      },
+      "channelId": "telegram",
+      "conversation": {
+        "id": "267230627",
+        "isGroup": false
+      },
+      "from": {
+        "id": "267230627",
+        "name": "zephinzer"
+      },
+      "id": "8TThQHqc76I",
+      "recipient": {
+        "id": "bizgrants_bot",
+        "name": "grant_bot"
+      },
+      "serviceUrl": "https://telegram.botframework.com/",
+      "text": "am i eligible?",
+      "timestamp": "2016-11-10T06:55:27.0703571+00:00",
+      "type": "message"
+    };
     next();
-  });
-  server.post('/api/messages', connector.listen());
+  }, connector.listen()]);
   server.listen(process.env.port || process.env.PORT || 3978, function () {
     telegramDebug.notify('Bot started in production mode!');
     console.log('%s listening to %s', server.name, server.url);

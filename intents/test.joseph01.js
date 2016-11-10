@@ -6,6 +6,8 @@ module.exports = {
     return [
       function(session, args, next) {
         console.log('|----------------------session-----------------------|');
+        telegramDebug.logJson(session.message);
+        telegramDebug.logJson(session.userData);
         console.log(session);
         console.log('|---------------------/session-----------------------|');
         console.log('|------------------------args------------------------|');
