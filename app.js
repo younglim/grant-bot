@@ -116,6 +116,15 @@ bot.dialog('/uploadImage', [
   }
 ]);
 if(config.environment === 'production') {
+  server.get('/trigger', (req, res, next) {
+
+  });
+  server.post('/api/messages', (req, res, next) => {
+    console.log('!!!!!!');
+    telegramDebug.logJson(request.body);
+    telegramDebug.logJson(request.query);
+    next();
+  });
   server.post('/api/messages', connector.listen());
   server.listen(process.env.port || process.env.PORT || 3978, function () {
     telegramDebug.notify('Bot started in production mode!');
