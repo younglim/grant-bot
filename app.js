@@ -31,11 +31,6 @@ var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [
   recognizer
 ] });
-// dialog.begin = function(session, reply) {
-//  // session.endDialog();
-//   session.endConversation();
-//   this.replyReceived(session);
-// }
 
 /**
  * START CONTROLLER
