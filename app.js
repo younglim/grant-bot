@@ -116,7 +116,7 @@ bot.dialog('/uploadImage', [
   }
 ]);
 if(config.environment === 'production') {
-  server.post('/api/messages', (req, res, next) => {
+  server.post('/api/messages', function(req, res, next) {
     console.log('!!!!!!');
     next();
   });
