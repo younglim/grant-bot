@@ -71,7 +71,6 @@ bot.dialog('/uploadImage', [
     builder.Prompts.attachment(session, "Upload the document and I will keep track of the claim.");
   },
   (session, results) => {
-    telegramDebug.logJson(results || { 'message': 'nothing' });
     results.response.forEach(function (attachment) {
         visionClient.vision.ocr({
           url: attachment.contentUrl,
