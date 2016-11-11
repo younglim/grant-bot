@@ -38,7 +38,16 @@ var connector = (config.environment === 'development') ?
   new builder.ConsoleConnector().listen() :
   new builder.ChatConnector(config.botCredentials);
 var bot = new builder.UniversalBot(connector);
-
+bot.mwReceive.push(message => {
+  telegramDebug.logJson(message);
+  if(message.text === 'RESET YOURSELF') {
+    var msg = new builder.Message()
+      .text('You have exited the conversation. I\'m sorry I messed up ):')
+      .address(savedAddress);
+    bot.send(msg);
+    bot.endConversation();
+  }
+});
 bot.dialog('/', dialog);
 const pathToIntents = path.join(__dirname, '/intents');
 const intentListing = fs.readdirSync(pathToIntents);
