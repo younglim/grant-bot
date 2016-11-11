@@ -128,15 +128,13 @@ if(config.environment === 'production') {
     var msg = new builder.Message()
       .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt. ')
       .address(savedAddress);
-    // bot.send(msg);
-    // setTimeout(() => {
-
-    // }, 1000);
-    var msgTrigger = new builder.Message()
-      .text('I\'d like to upload a document.')
-      .address(savedAddress);
-    bot.receive(msgTrigger.toMessage());
-    // bot.beginDialog('/notify');
+    bot.send(msg);
+    setTimeout(() => {
+      var msgTrigger = new builder.Message()
+        .text('I\'d like to upload a document.')
+        .address(savedAddress);
+      bot.receive(msgTrigger.toMessage());
+    }, 1300);
     res.send('done');
   });
   server.use(restify.bodyParser({ mapParams: true }));
