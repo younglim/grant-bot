@@ -141,7 +141,38 @@ if(config.environment === 'production') {
     });
     res.write(User.getUsers());
   });
-  server.get('/user/:id', function(req, res, next) {
+  server.get('/user/tg', function(req, res, next) {
+    const savedAddress = {
+      "bot": {
+        "id": "bizgrants_bot",
+        "name": "grant_bot"
+      },
+      "channelId": "telegram",
+      "conversation": {
+        "id": "267230627",
+        "isGroup": false
+      },
+      "id": "HjKcFu2zaN7",
+      "serviceUrl": "https://telegram.botframework.com",
+      "useAuth": true,
+      "user": {
+        "id": "267230627",
+        "name": "zephinzer"
+      }
+    };
+    var msg = new builder.Message()
+      .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt. ')
+      .address(savedAddress);
+    bot.send(msg);
+    setTimeout(() => {
+      var msgTrigger = new builder.Message()
+        .text('I\'d like to upload a document.')
+        .address(savedAddress);
+      bot.receive(msgTrigger.toMessage());
+    }, 1300);
+    res.send('done');
+  });
+  server.get('/user/fb', function(req, res, next) {
     const savedAddress = {
       "bot": {
         "id": "1286630571400655",
