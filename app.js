@@ -39,8 +39,8 @@ var connector = (config.environment === 'development') ?
   new builder.ChatConnector(config.botCredentials);
 var bot = new builder.UniversalBot(connector);
 bot.mwReceive.push(message => {
-  telegramDebug.logJson(message);
   if(message.text === 'RESET YOURSELF') {
+    telegramDebug.notify('Bot conversation reset.');
     var msg = new builder.Message()
       .text('You have exited the conversation. I\'m sorry I messed up ):')
       .address(savedAddress);
