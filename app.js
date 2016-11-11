@@ -45,7 +45,16 @@ bot.mwReceive.push((message, next) => {
       .text('You have exited the conversation. I\'m sorry I messed up ):')
       .address(savedAddress);
     bot.send(msg);
-    bot.endConversation();
+    setTimeout(() => {
+      bot.receive(
+        (
+          new builder
+            .Message()
+            .text('RESET CONVERSATION')
+            .address(savedAddress)
+        ).toMessage()
+      );
+    }, 1000);
   }
   next();
 });
