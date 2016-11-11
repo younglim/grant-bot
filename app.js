@@ -38,7 +38,7 @@ var connector = (config.environment === 'development') ?
   new builder.ConsoleConnector().listen() :
   new builder.ChatConnector(config.botCredentials);
 var bot = new builder.UniversalBot(connector);
-bot.mwReceive.push(message => {
+bot.mwReceive.push((message, next) => {
   if(message.text === 'RESET YOURSELF') {
     telegramDebug.notify('Bot conversation reset.');
     var msg = new builder.Message()
@@ -47,6 +47,7 @@ bot.mwReceive.push(message => {
     bot.send(msg);
     bot.endConversation();
   }
+  next();
 });
 bot.dialog('/', dialog);
 const pathToIntents = path.join(__dirname, '/intents');
