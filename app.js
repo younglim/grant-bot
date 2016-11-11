@@ -114,16 +114,6 @@ bot.dialog('/uploadImage', [
   }
 ]);
 if(config.environment === 'production') {
-  bot.dialog('/notify', [
-    function(session, args, next) {
-      telegramDebug.notify('it\'s reaching!');
-      session.send('hello');
-      next();
-    },
-    function(session) {
-      session.endDialog();
-    }
-  ])
   server.get('/users', function(req, res, next) {
     const User = require('./users');
     res.writeHead(200, {
@@ -136,10 +126,17 @@ if(config.environment === 'production') {
     const User = require('./users');
     const savedAddress = User.getId(req.params.id);
     var msg = new builder.Message()
-      .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt.')
+      .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt. ')
       .address(savedAddress);
-    bot.send(msg);
-    bot.beginDialog('/notify');
+    // bot.send(msg);
+    // setTimeout(() => {
+
+    // }, 1000);
+    var msgTrigger = new builder.Message()
+      .text('I\'d like to upload a document')
+      .address(savedAddress);
+    bot.receive(msgTrigger);
+    // bot.beginDialog('/notify');
     res.send('done');
   });
   server.use(restify.bodyParser({ mapParams: true }));
