@@ -8,6 +8,7 @@ module.exports = {
         const User = require('../users');
         User.pushUser(session.message.address);
         session.send('Registered user ' + JSON.stringify(session.message.address));
+        session.endDialog();
       }
     ];
   }
