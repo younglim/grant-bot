@@ -149,15 +149,15 @@ if(config.environment === 'production') {
       },
       "channelId": "telegram",
       "conversation": {
-        "id": "267230627",
+        "id": "51225644",
         "isGroup": false
       },
-      "id": "HjKcFu2zaN7",
+      "id": "GR1MqlAMOy5",
       "serviceUrl": "https://telegram.botframework.com",
       "useAuth": true,
       "user": {
-        "id": "267230627",
-        "name": "zephinzer"
+        "id": "51225644",
+        "name": "zuiyoung"
       }
     };
     var msg = new builder.Message()
