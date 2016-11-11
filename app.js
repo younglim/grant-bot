@@ -133,9 +133,9 @@ if(config.environment === 'production') {
 
     // }, 1000);
     var msgTrigger = new builder.Message()
-      .text('I\'d like to upload a document')
+      .text('I\'d like to upload a document.')
       .address(savedAddress);
-    bot.receive(msgTrigger);
+    bot.receive(msgTrigger.toMessage());
     // bot.beginDialog('/notify');
     res.send('done');
   });
