@@ -142,7 +142,6 @@ if(config.environment === 'production') {
     res.write(User.getUsers());
   });
   server.get('/user/:id', function(req, res, next) {
-    //const User = require('./users');
     const savedAddress = {
       "bot": {
         "id": "1286630571400655",
@@ -150,17 +149,17 @@ if(config.environment === 'production') {
       },
       "channelId": "facebook",
       "conversation": {
-        "id": "1090584151055020-1286630571400655",
+        "id": "1104052302964625-1286630571400655",
         "isGroup": false
       },
-      "id": "mid.1478833890005:6c3190c343",
+      "id": "mid.1478833841639:485bc7c387",
       "serviceUrl": "https://facebook.botframework.com",
       "useAuth": true,
       "user": {
-        "id": "1090584151055020",
-        "name": "Zui Young"
+        "id": "1104052302964625",
+        "name": "Joseph Goh"
       }
-    };//User.getId(req.params.id);
+    };
     var msg = new builder.Message()
       .text('Hi Mr. Tan, your grant application with ID \'SA7661L70XC\' (Market Readiness Assistance by Internal Expansion Singapore) is missing a receipt. ')
       .address(savedAddress);
